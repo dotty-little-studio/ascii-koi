@@ -31,3 +31,5 @@ Night water keeps a soft blue center and gradually deepens toward blue-black ell
 The outer night edge is near-black with a faint blue tint; the central blue and gradient shape are retained.
 
 A broader central blue area and a smoothly stronger middle falloff make the night gradient easier to distinguish without changing its endpoint colors.
+
+Each entry into evening selects two softly glowing, roughly opposite edge positions. They stay fixed for that evening, including resize; a separate random stream leaves fish motion unchanged.
