@@ -27,3 +27,5 @@ Night resting also includes a very small, bounded whole-body sway around each re
 At night, small tail flicks have fish-specific varied pauses, durations and strengths, with smooth starts and finishes. This is a quiet artistic resting expression, not a biological simulation.
 
 Night water keeps a soft blue center and gradually deepens toward blue-black elliptical edges; fish-edge colors follow the same local water gradient.
+
+The outer night edge is near-black with a faint blue tint; the central blue and gradient shape are retained.
