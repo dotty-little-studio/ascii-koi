@@ -23,3 +23,5 @@ This adaptation changes the fish anatomy and color treatment to koi, introduces 
 The app and worker are readable JavaScript bundles. This source-only package intentionally contains no prior repository history, development logs, or rollback versions.
 
 Night resting also includes a very small, bounded whole-body sway around each rest anchor (under 2 pixels at normal canvas scale), with independent slow phases. It does not accumulate into swimming drift.
+
+At night, small tail flicks have fish-specific varied pauses, durations and strengths, with smooth starts and finishes. This is a quiet artistic resting expression, not a biological simulation.
