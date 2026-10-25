@@ -33,3 +33,5 @@ The outer night edge is near-black with a faint blue tint; the central blue and 
 A broader central blue area and a smoothly stronger middle falloff make the night gradient easier to distinguish without changing its endpoint colors.
 
 Each entry into evening selects two softly glowing, roughly opposite edge positions. They stay fixed for that evening, including resize; a separate random stream leaves fish motion unchanged.
+
+Evening colors fade in place. Returning to evening before the previous glow has disappeared restores the same positions; a fresh layout is allowed only after the glow has faded below visibility.
