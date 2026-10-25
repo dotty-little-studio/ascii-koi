@@ -37,3 +37,5 @@ Each entry into evening selects two softly glowing, roughly opposite edge positi
 Each new entry into evening introduces two new opposing glows. Previous glows fade independently at their old positions, so several may briefly coexist. Overlap uses the strongest local glow rather than adding saturation. Older residuals are preserved in a bounded spatial field until invisible.
 
 At sunset, pale peach RGB(254,228,218) spreads from the two fixed edge centers over 32 seconds. Stronger vermilion remains bounded near the centers; its strength is not spread over the whole screen. Older washes and accents independently fade.
+
+During evening, translucent fin and tail rays have a small local contrast adjustment for readability against peach water. Fish geometry, body patterns and other modes are unchanged.
