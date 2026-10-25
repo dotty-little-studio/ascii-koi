@@ -6,7 +6,7 @@ Three ASCII koi on a light field, with quiet schooling fish and gentle swimming 
 
 Automatic mode follows the viewer device’s local clock, not geolocation: day 06:00–17:00, evening 17:00–20:00, night 20:00–06:00. The clock, sun, sunset and moon buttons at bottom right select automatic/day/evening/night. Manual selection is remembered on this browser when local storage is available; choose the clock to restore automatic switching. The page refreshes the clock on tab return and at 30-second intervals.
 
-Water and fish pigments transition gently between light, warm dusk and dark blue night palettes. Evening and night slow the shared simulation clock to 88% and 72%, retaining predictive avoidance without repositioning fish. Reduced-motion preferences keep a still scene while allowing immediate theme changes.
+Water and fish pigments transition gently between light, warm dusk and dark blue night palettes. Evening slows swimming to 88%. At night, koi gently settle in place while their tails and fins keep a very small, slow movement; the tiny schooling fish continue drifting. An existing close overlap is allowed to separate before settling. Day or evening restores swimming smoothly without repositioning the fish. The koi physics and avoidance planner share the same slowed clock; no new plans are requested while the koi are resting. Reduced-motion preferences keep a still scene while allowing immediate theme changes.
 
 ## Run
 
@@ -21,3 +21,5 @@ The full upstream notice, Copyright (c) 2026 drewdi, is preserved in LICENSE.ups
 This adaptation changes the fish anatomy and color treatment to koi, introduces calm tempo and water light, retains the original small-fish schooling, and adds predictive torso-aware yielding through a worker. Occasional overlap or faint fin-tip edge contact remains possible. It is an adaptation, not the original author's artwork or an exact reproduction of the reference motion.
 
 The app and worker are readable JavaScript bundles. This source-only package intentionally contains no prior repository history, development logs, or rollback versions.
+
+Night resting also includes a very small, bounded whole-body sway around each rest anchor (under 2 pixels at normal canvas scale), with independent slow phases. It does not accumulate into swimming drift.
