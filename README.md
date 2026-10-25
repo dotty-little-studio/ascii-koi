@@ -25,3 +25,5 @@ The app and worker are readable JavaScript bundles. This source-only package int
 Night resting also includes a very small, bounded whole-body sway around each rest anchor (under 2 pixels at normal canvas scale), with independent slow phases. It does not accumulate into swimming drift.
 
 At night, small tail flicks have fish-specific varied pauses, durations and strengths, with smooth starts and finishes. This is a quiet artistic resting expression, not a biological simulation.
+
+Night water keeps a soft blue center and gradually deepens toward blue-black elliptical edges; fish-edge colors follow the same local water gradient.
