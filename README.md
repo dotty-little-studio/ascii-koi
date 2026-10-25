@@ -34,4 +34,4 @@ A broader central blue area and a smoothly stronger middle falloff make the nigh
 
 Each entry into evening selects two softly glowing, roughly opposite edge positions. They stay fixed for that evening, including resize; a separate random stream leaves fish motion unchanged.
 
-Evening colors fade in place. Returning to evening before the previous glow has disappeared restores the same positions; a fresh layout is allowed only after the glow has faded below visibility.
+Each new entry into evening introduces two new opposing glows. Previous glows fade independently at their old positions, so several may briefly coexist. Overlap uses the strongest local glow rather than adding saturation. Older residuals are preserved in a bounded spatial field until invisible.
