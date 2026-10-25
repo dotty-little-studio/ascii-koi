@@ -2,6 +2,12 @@
 
 Three ASCII koi on a light field, with quiet schooling fish and gentle swimming motion. No audio or external runtime dependencies.
 
+## Light and quiet hours
+
+Automatic mode follows the viewer device’s local clock, not geolocation: day 06:00–17:00, evening 17:00–20:00, night 20:00–06:00. The clock, sun, sunset and moon buttons at bottom right select automatic/day/evening/night. Manual selection is remembered on this browser when local storage is available; choose the clock to restore automatic switching. The page refreshes the clock on tab return and at 30-second intervals.
+
+Water and fish pigments transition gently between light, warm dusk and dark blue night palettes. Evening and night slow the shared simulation clock to 88% and 72%, retaining predictive avoidance without repositioning fish. Reduced-motion preferences keep a still scene while allowing immediate theme changes.
+
 ## Run
 
 Serve this folder using a static HTTP server, then open index.html. The animation uses a same-origin JavaScript module worker; opening the HTML directly with file:// is not supported. Relative paths support both a website root and a project subdirectory. For GitHub Pages, publish this folder as the site root.

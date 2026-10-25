@@ -1,3 +1,15 @@
+// Theme colors interpolate pigment and water separately; simulation uses a shared clock scale.
+function pondRGB(day, dusk, night) {
+  const t = globalThis.koiTheme || {dusk:0,night:0};
+  return day.map((v,i)=>Math.round(v+(dusk[i]-v)*t.dusk+(night[i]-v)*t.night));
+}
+function pondCSS(day,dusk,night) { return `rgb(${pondRGB(day,dusk,night).join(",")})`; }
+function pondPigment(g) {
+  const red=g[0]>g[1]*1.2, dark=Math.max(...g)<85, pearl=Math.min(...g)>200;
+  const dusk=g.map((v,i)=>Math.min(255,v+[12,2,-5][i]));
+  const night=red?[207,100,75]:dark?[57,88,111]:pearl?[224,236,230]:[144,170,166];
+  return pondRGB(g,dusk,night);
+}
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
@@ -570,12 +582,19 @@ var require_browser_entry = __commonJS({
         const { width: n, height: e, dpr: s, cw: a, ch: o } = this;
         t.setTransform(s, 0, 0, s, 0, 0);
         const c = t.createRadialGradient(n * 0.45, e * 0.4, 20, n * 0.5, e * 0.5, n * 0.8);
-        c.addColorStop(0, "#ffffff"), c.addColorStop(0.55, "#fdfefd"), c.addColorStop(1, "#f8faf9"), t.fillStyle = c, t.fillRect(0, 0, n, e), ue(t, n, e, a, o, s);
+        c.addColorStop(0, pondCSS([255,255,255],[255,245,228],[20,38,54])), c.addColorStop(0.55, pondCSS([253,254,253],[251,236,217],[12,25,39])), c.addColorStop(1, pondCSS([248,250,249],[235,214,196],[7,17,29])), t.fillStyle = c, t.fillRect(0, 0, n, e), ue(t, n, e, a, o, s);
       }
       render(t, n) {
         const { ctx: e, dpr: s, cols: a, ch: o } = this;
         if (a === 0) return;
         const c = t.time;
+        const theme=globalThis.koiTheme || {dusk:0,night:0};
+        const key=Math.round(theme.dusk*100)+":"+Math.round(theme.night*100);
+        if(this.themeKey!==key) {
+          this.themeKey=key;this.paintBackground();
+          const rgb=pondRGB([96,122,118],[124,112,96],[119,156,167]);
+          this.driftFishStyles=wt.map(alpha=>`rgba(${rgb.join(",")},${alpha*(0.9-theme.night*0.15)})`);
+        }
         this.koiPond = t.sharks.every((u) => u.kind === "koi"), this.consumeEvents(t), this.rasterizeSharks(t.sharks, c), this.depositWake(t), this.diffuse(n), e.setTransform(1, 0, 0, 1, 0, 0), e.drawImage(this.bg, 0, 0), e.setTransform(s, 0, 0, s, 0, 0), this.drawWaterLight(c), this.markFish(t), this.drawDots(c), e.font = `600 ${Math.round(o * 0.74)}px ${this.fontFamily}`, e.textAlign = "center", e.textBaseline = "middle", this.drawHeat(), this.drawFish(), this.drawSharks(c);
       }
       drawWaterLight(t) {
@@ -748,7 +767,7 @@ var require_browser_entry = __commonJS({
         let k = 0;
         const v = 0.013 * Math.sin(M * 68 + b) + 8e-3 * Math.sin(l * 91), E = (G, tt, et, A) => ((M - G) / et) ** 2 + ((l - tt + v) / A) ** 2 < 1;
         b === 1 ? (E(0.16, 0, 0.12, 0.085) || E(0.44, -0.03, 0.12, 0.11) || E(0.69, 0.015, 0.1, 0.07)) && (k = 1) : b === 2 ? ((E(0.12, 0, 0.095, 0.077) || E(0.39, 0.04, 0.13, 0.095) || E(0.67, -0.02, 0.1, 0.067)) && (k = 1), (E(0.28, -0.06, 0.06, 0.045) || E(0.53, -0.02, 0.065, 0.07) || E(0.76, 0.025, 0.045, 0.035)) && (k = 2)) : ((E(0.13, 0, 0.09, 0.075) || E(0.45, -0.01, 0.17, 0.1)) && (k = 1), (E(0.29, 0.075, 0.08, 0.05) || E(0.65, -0.025, 0.1, 0.06)) && (k = 2));
-        const I = ht.koi.halfWidth(M) || 0.02, h = T(Math.abs(l) / I, 0, 1), P = o % 1009 / 1009, W = Math.pow(1 - h, 0.5), U = (0.17 + W * 0.83) * (0.9 + P * 0.1) * c, y = (G, tt) => `rgb(${G.map((et) => Math.round(253 + (et - 253) * tt)).join(",")})`;
+        const I = ht.koi.halfWidth(M) || 0.02, h = T(Math.abs(l) / I, 0, 1), P = o % 1009 / 1009, W = Math.pow(1 - h, 0.5), U = (0.17 + W * 0.83) * (0.9 + P * 0.1) * c, y = (G, tt) => { const bg=pondRGB([253,253,253],[251,236,217],[12,25,39]), pigment=pondPigment(G); return `rgb(${pigment.map((et,j)=>Math.round(bg[j]+(et-bg[j])*tt)).join(",")})`; };
         if (s === It) {
           const G = Math.atan2(l, M - (M > 0.8 ? 0.8 : 0.22)), tt = Math.pow(0.5 + 0.5 * Math.cos(G * 24), 5), et = M > 0.8 ? 0.16 : 0.23, V = 0.055 + T(1 - Math.abs(l) / et, 0, 1) * 0.15 + tt * 0.15;
           P > 0.18 && (f.fillStyle = y([133, 150, 146], V), f.fillRect(n + 1, e + 1, i - 1.5, p - 1.5)), f.fillStyle = y([100, 124, 120], V + 0.09);
@@ -762,7 +781,7 @@ var require_browser_entry = __commonJS({
           return;
         }
         if (s === kt) {
-          f.fillStyle = "#62706c", f.fillText("o", n + i / 2, e + p / 2 + 1);
+          f.fillStyle = pondCSS([98,112,108],[109,96,80],[173,197,196]), f.fillText("o", n + i / 2, e + p / 2 + 1);
           return;
         }
         let O = k === 1 ? [135, 61, 45] : k === 2 ? [32, 47, 49] : [115, 129, 119];
@@ -775,7 +794,7 @@ var require_browser_entry = __commonJS({
         if (z < 0.025 && h < 0.72) {
           const G = [[109, 142, 137], [162, 135, 148], [177, 150, 105]][o % 3];
           f.fillStyle = y(G, 0.62);
-        } else h < 0.24 && P > 0.64 && k !== 1 ? f.fillStyle = k === 2 ? "#233b43" : "#586b68" : $ ? f.fillStyle = y([249, 247, 239], 0.88) : f.fillStyle = y(k === 1 ? [129, 87, 74] : [86, 104, 101], (0.15 + W * 0.42) * c);
+        } else h < 0.24 && P > 0.64 && k !== 1 ? f.fillStyle = k === 2 ? pondCSS([35,59,67],[49,55,55],[122,155,174]) : pondCSS([88,107,104],[111,103,87],[190,204,194]) : $ ? f.fillStyle = y([249, 247, 239], 0.88) : f.fillStyle = y(k === 1 ? [129, 87, 74] : [86, 104, 101], (0.15 + W * 0.42) * c);
         const Z = h > 0.8 ? ".:," : k === 2 ? "%8#S" : ":;t%SX";
         f.fillText(Z[(o >>> 8) % Z.length], n + i / 2, e + p / 2 + 1);
       }
@@ -865,7 +884,9 @@ var require_browser_entry = __commonJS({
         d(this, "intersectionObserver");
         d(this, "disposed", false);
         d(this, "frame", (t2) => {
-          const n2 = Math.min(0.1, (t2 - this.last) / 1e3);
+          const realDt = Math.min(0.1, (t2 - this.last) / 1e3);
+          globalThis.koiTheme?.update(realDt);
+          const n2 = realDt * (globalThis.koiTheme?.pace || 1);
           this.last = t2, this.acc += n2;
           let e2 = 0;
           for (; this.acc >= xt && e2 < Vt; ) this.world.step(xt), this.acc -= xt, e2++;
@@ -888,7 +909,7 @@ var require_browser_entry = __commonJS({
         var e;
         this.canvas = t, this.world = new ce(n), this.renderer = new pe(t), this.renderer.setFontFamily(getComputedStyle(t).fontFamily), this.reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)"), this.resizeObserver = new ResizeObserver(() => this.resize()), this.resizeObserver.observe(t), this.intersectionObserver = new IntersectionObserver(([s]) => {
           this.visible = s.isIntersecting, this.schedule();
-        }), this.intersectionObserver.observe(t), this.reducedMotion.addEventListener("change", this.onMotionPreference), window.addEventListener("pointermove", this.onPointerMove, { passive: true }), window.addEventListener("pointerdown", this.onPointerDown, { passive: true }), document.documentElement.addEventListener("pointerleave", this.onPointerLeave), window.addEventListener("blur", this.onPointerLeave), this.resize(), (e = document.fonts) == null || e.load(`600 16px ${getComputedStyle(t).fontFamily}`).then(() => {
+        }), this.intersectionObserver.observe(t), this.reducedMotion.addEventListener("change", this.onMotionPreference), window.addEventListener("pointermove", this.onPointerMove, { passive: true }), window.addEventListener("pointerdown", this.onPointerDown, { passive: true }), document.documentElement.addEventListener("pointerleave", this.onPointerLeave), window.addEventListener("blur", this.onPointerLeave), this.resize(), window.addEventListener("koi-theme-change", () => { if(this.reducedMotion.matches) {globalThis.koiTheme?.settle(); this.renderer.render(this.world,0);} }), (e = document.fonts) == null || e.load(`600 16px ${getComputedStyle(t).fontFamily}`).then(() => {
           !this.disposed && this.reducedMotion.matches && this.drawStill();
         }), this.schedule();
       }
